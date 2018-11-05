@@ -1,3 +1,5 @@
+require 'date'
+
 class TransactionLog
 
   attr_reader :log
@@ -5,6 +7,14 @@ class TransactionLog
   def initialize
     @log = []
   end
-  
+
+  def add(credit: nil, debit: nil)
+    @log.unshift({ date: todays_date, credit: credit, debit: debit })
+  end
 end
 
+private 
+
+def todays_date
+  Date.today.strftime('%d/%m/%Y')
+end
