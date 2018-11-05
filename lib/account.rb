@@ -1,6 +1,6 @@
 require 'date'
 
-class ATM
+class Account
 
   attr_reader :balance, :transactions
 
@@ -12,7 +12,11 @@ class ATM
   def bank_statement
     string_of_table = "date || credit || debit || balance"
     transactions.each do |transaction|
-      string_of_table += "\n#{transaction[:date]} || #{transaction[:credit]} || #{transaction[:debit]} || #{transaction[:balance]}"
+      date = transaction[:date]
+      credit = transaction[:credit]
+      debit = transaction[:debit]
+      balance = transaction[:balance]
+      string_of_table += "\n#{date} || #{credit} || #{debit} || #{balance}"
     end
     string_of_table
   end
