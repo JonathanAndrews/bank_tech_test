@@ -17,12 +17,22 @@ class Account
   end
 
   def deposit(money)
+    misuse_protection(money)
     @balance += money
     transaction_log.add(credit: money)
   end
 
   def withdraw(money)
+    misuse_protection(money)
     @balance -= money
     transaction_log.add(debit: money)
   end
+
+  private
+
+  def misuse_protection(input)
+    raise "A String is an invalid input" if input.instance_of?(String)
+  end
+
+  
 end

@@ -13,7 +13,7 @@ class Statement
       debit = transaction[:debit]
       balance = balance + credit.to_i - debit.to_i
       table_rows = "\n#{date} || #{credit} ||"\
-              " #{debit} || #{balance}#{table_rows}"
+                   " #{debit} || #{balance}#{table_rows}"
     end
 
     COLUMN_TITLES + table_rows

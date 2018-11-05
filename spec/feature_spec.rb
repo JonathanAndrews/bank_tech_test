@@ -52,5 +52,21 @@ context "Feature Tests" do
         end
       end 
     end
+
+    context 'Guarding against Misuse' do
+      let(:account) { described_class.new }
+
+      describe 'If someone deposit a String' do
+        it 'should throw an error' do
+          expect{ account.deposit("A String") }.to raise_error("A String is an invalid input")
+        end
+      end
+
+      describe 'If someone tries to withdraw a String' do
+        it 'should throw an error' do
+          expect{ account.withdraw("A String") }.to raise_error("A String is an invalid input")
+        end
+      end
+    end
   end
 end
