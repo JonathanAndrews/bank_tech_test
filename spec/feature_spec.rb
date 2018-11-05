@@ -18,7 +18,7 @@ context "Feature Tests" do
         it 'makes a credit transaction object' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
   
-          returned_hash = { date: '05/11/2018', credit: 1, balance: 1 }
+          returned_hash = { date: '05/11/2018', credit: 1 }
           expect(account.deposit(1)).to eq([returned_hash])
         end
       end 
@@ -36,7 +36,7 @@ context "Feature Tests" do
         it 'makes a debit transaction object' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
   
-          returned_hash = { date: '05/11/2018', debit: 1, balance: -1 }
+          returned_hash = { date: '05/11/2018', debit: 1 }
           expect(account.withdraw(1)).to eq([returned_hash])
         end
       end 

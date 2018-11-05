@@ -4,14 +4,18 @@ class Statement
   COLUMN_TITLES = "date || credit || debit || balance"
 
   def print_out(transactions)
-    string_of_table = COLUMN_TITLES
+    table_rows = ""
+    balance = 0
+
     transactions.each do |transaction|
       date = transaction[:date]
       credit = transaction[:credit]
       debit = transaction[:debit]
-      balance = transaction[:balance]
-      string_of_table += "\n#{date} || #{credit} || #{debit} || #{balance}"
+      balance = balance + credit.to_i - debit.to_i
+      table_rows = "\n#{date} || #{credit} ||"\
+              " #{debit} || #{balance}#{table_rows}"
     end
-    string_of_table
+
+    COLUMN_TITLES + table_rows
   end
 end
