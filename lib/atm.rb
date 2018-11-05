@@ -22,6 +22,11 @@ class ATM
     @transactions << { date: todays_date, credit: money, balance: balance }
   end
 
+  def withdraw(money)
+    @balance -= money
+    @transactions << { date: todays_date, debit: money, balance: balance }
+  end
+
   private 
 
   def todays_date
