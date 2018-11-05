@@ -26,7 +26,8 @@ context "Feature Tests" do
       describe 'Account#bank_statement' do
         it 'prints out bank statement with one row after deposit' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
-          string_of_table = "date || credit || debit || balance\n05/11/2018 || 1 ||  || 1"
+          string_of_table = "date || credit || debit || balance\n"\
+                            "05/11/2018 || 1 ||  || 1"
           account.deposit(1)
           expect(account.bank_statement).to eq(string_of_table)
         end
@@ -44,12 +45,12 @@ context "Feature Tests" do
       describe 'Account#withdraw' do
         it 'prints out bank statement with one row after withdraw' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
-          string_of_table = "date || credit || debit || balance\n05/11/2018 ||  || 1 || -1"
+          string_of_table = "date || credit || debit || balance\n"\
+                            "05/11/2018 ||  || 1 || -1"
           account.withdraw(1)
           expect(account.bank_statement).to eq(string_of_table)
         end
       end 
-  
     end
   end
 end

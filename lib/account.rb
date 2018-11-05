@@ -18,11 +18,11 @@ class Account
 
   def deposit(money)
     @balance += money
-    transaction_log.add(credit: money )
+    transaction_log.add(credit: money)
   end
 
   def withdraw(money)
     @balance -= money
-    transaction_log.add(debit: money )
+    transaction_log.add(debit: money)
   end
 end

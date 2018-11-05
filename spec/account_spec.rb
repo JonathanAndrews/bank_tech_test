@@ -3,10 +3,10 @@ require 'account'
 describe Account do
   context 'Brand new bank account' do
 
-    let(:empty_array)  { [] }
+    let(:empty_array) { [] }
     let(:statement_double) { double :Statement }
     let(:log_double) { double :TransactionLog, log: empty_array }
-    let(:account) { described_class.new(statement: statement_double, log: log_double ) }
+    let(:account) { described_class.new(statement: statement_double, log: log_double) }
 
     describe 'Account#bank_statement' do
       it "calls Statement#print_out" do
