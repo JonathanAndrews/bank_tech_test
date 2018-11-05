@@ -2,11 +2,11 @@ require 'date'
 
 class Account
 
-  attr_reader :balance, :transactions, :statement
+  attr_reader :transactions, :statement
 
   def initialize(statement = Statement.new)
+    @balance = 0
     @transactions = []
-    @balance = 0 
     @statement = statement
   end
 
@@ -16,12 +16,12 @@ class Account
 
   def deposit(money)
     @balance += money
-    @transactions << { date: todays_date, credit: money, balance: balance }
+    @transactions.unshift({ date: todays_date, credit: money })
   end
 
   def withdraw(money)
     @balance -= money
-    @transactions << { date: todays_date, debit: money, balance: balance }
+    @transactions.unshift({ date: todays_date, debit: money })
   end
 
   private 
