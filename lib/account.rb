@@ -1,32 +1,28 @@
 require 'date'
+require 'statement'
+require 'transaction_log'
 
 class Account
 
-  attr_reader :transactions, :statement
+  attr_reader :transaction_log, :statement, :balance
 
-  def initialize(statement = Statement.new)
+  def initialize(statement: Statement.new, log: TransactionLog.new)
     @balance = 0
-    @transactions = []
+    @transaction_log = log
     @statement = statement
   end
 
   def bank_statement
-    statement.print_out(transactions)
+    statement.print_out(transaction_log.log)
   end
 
   def deposit(money)
     @balance += money
-    @transactions.unshift({ date: todays_date, credit: money })
+    transaction_log.add(credit: money )
   end
 
   def withdraw(money)
     @balance -= money
-    @transactions.unshift({ date: todays_date, debit: money })
-  end
-
-  private 
-
-  def todays_date
-    Date.today.strftime('%d/%m/%Y')
+    transaction_log.add(debit: money )
   end
 end
