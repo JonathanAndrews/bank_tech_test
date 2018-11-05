@@ -10,4 +10,8 @@ As a User,
 So I can put save money,
 I want to be able to make a deposit.
 
+As a User,
+So I can put spend my money,
+I want to be able to make a withdrawal.
+
 ```
