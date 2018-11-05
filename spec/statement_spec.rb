@@ -36,6 +36,24 @@ describe Statement do
         printed_statement = statement.print_out(transactions)
         expect(printed_statement).to eq(string_of_table)
       end
+
+      it 'prints out bank statement with 3 row in reverse chronological order' do
+        transactions << debit_transaction
+        transactions << credit_transaction
+        transactions << credit_transaction
+        transactions << credit_transaction
+        transactions << credit_transaction
+        string_of_table = "date || credit || debit || balance\n"\
+                          "05/11/2018 || 1 ||  || 3\n"\
+                          "05/11/2018 || 1 ||  || 2\n"\
+                          "05/11/2018 || 1 ||  || 1\n"\
+                          "05/11/2018 || 1 ||  || 0\n"\
+                          "05/11/2018 ||  || 1 || -1"
+                          
+        
+        printed_statement = statement.print_out(transactions)
+        expect(printed_statement).to eq(string_of_table)
+      end
     end 
 
   end
