@@ -2,7 +2,7 @@ require 'date'
 
 class ATM
 
-  attr_reader :balance
+  attr_reader :balance, :transactions
 
   def initialize
     @transactions = []
@@ -10,12 +10,16 @@ class ATM
   end
 
   def bank_statement
-    'date || credit || debit || balance'
+    string_of_table = "date || credit || debit || balance"
+    transactions.each do |transaction|
+      string_of_table += "\n#{transaction[:date]} || #{transaction[:credit]} || #{transaction[:debit]} || #{transaction[:balance]}"
+    end
+    string_of_table
   end
 
   def deposit(money)
     @balance += money
-    @transactions << { date: todays_date, amount: money, balance: balance }
+    @transactions << { date: todays_date, credit: money, balance: balance }
   end
 
   private 

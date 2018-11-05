@@ -6,7 +6,7 @@ context "Feature Tests" do
       let(:atm) { described_class.new }
       describe 'ATM#bank_statement' do
         it "prints out blank bank statement" do
-          expect(atm.bank_statement).to eq('date || credit || debit || balance')
+          expect(atm.bank_statement).to eq("date || credit || debit || balance")
         end
       end 
     end
@@ -14,11 +14,19 @@ context "Feature Tests" do
     context 'Transactions' do
       let(:atm) { described_class.new }
       describe 'ATM#deposit' do
-        it "stores money in bank" do
-          returned_hash = { date: '05/11/2018', amount: 1, balance: 1 }
+        it 'makes a credit transaction object' do
+          returned_hash = { date: '05/11/2018', credit: 1, balance: 1 }
           expect(atm.deposit(1)).to eq([returned_hash])
         end
       end 
+  
+      describe 'ATM#bank_statement' do
+        it 'prints out bank statement with one row after deposit' do
+          atm.deposit(1)
+          expect(atm.bank_statement).to eq("date || credit || debit || balance\n05/11/2018 || 1 ||  || 1")
+        end
+      end 
+  
     end
   end
 end
