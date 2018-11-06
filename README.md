@@ -17,6 +17,14 @@ I want to be able to make a withdrawal.
 
 ```
 
+## Tech
+
+Built with
+
+Language      : Ruby
+Testing       : RSpec (Unit and Feature)
+Linter        : RuboCop
+Code Coverage : SimpleCov 
 
 ## Usage
 
@@ -34,3 +42,12 @@ rspec
 irb -r 'lib/account.rb'
 ```
 
+## IRB Demo
+
+
+## Sequence Diagram
+
+## License
+A short snippet describing the license (MIT, Apache etc)
+
+MIT © Yourname
