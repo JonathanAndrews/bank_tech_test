@@ -56,7 +56,6 @@ describe Account do
         expect(account.balance).to eq(6)
       end
     end
-
   end
 
   context 'Guarding against Misuse' do
