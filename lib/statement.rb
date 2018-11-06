@@ -10,11 +10,17 @@ class Statement
     balance = 0
 
     transactions.each do |transaction|
-      balance = balance + transaction[:credit].to_i - transaction[:debit].to_i
-      table_rows = "\n#{transaction[:date]} || #{transaction[:credit]} ||"\
-                   " #{transaction[:debit]} || #{balance}#{table_rows}"
+      credit = transaction[:credit]
+      debit = transaction[:debit]
+      balance = balance + credit.to_f - debit.to_f
+      table_rows = "\n#{transaction[:date]} || #{money_syntax(credit)} ||"\
+        " #{money_syntax(debit)} || #{money_syntax(balance)}#{table_rows}"
     end
 
     COLUMN_TITLES + table_rows
+  end
+
+  def money_syntax(number)
+    format('%.2f', number) unless number.nil?
   end
 end
