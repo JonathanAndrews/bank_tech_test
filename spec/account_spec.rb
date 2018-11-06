@@ -4,16 +4,24 @@ require 'account'
 
 describe Account do
   context 'Brand new bank account' do
-    let(:empty_array) { [] }
+    let(:deposit_hash) { { date: '05/11/2018', debit: nil, credit: 2 } }
+    let(:withdraw_hash) { { date: '05/11/2018', debit: 1, credit: nil } }
     let(:statement_double) { double :Statement }
-    let(:log_double) { double :TransactionLog, log: empty_array }
+    let(:log_double) { double :TransactionLog, log: [deposit_hash, withdraw_hash] }
     let(:account) do
       described_class.new(statement: statement_double, log: log_double)
     end
 
     describe 'Account#bank_statement' do
-      it 'calls Statement#print_out' do
-        expect(statement_double).to receive(:print_out).with(empty_array)
+      it 'calls Statement#print_out with full transaction logs' do
+        allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
+        allow(log_double).to receive(:add)
+        expected_log = [deposit_hash, withdraw_hash]
+
+        account.deposit(2)
+        account.withdraw(1)
+
+        expect(statement_double).to receive(:print_out).with(expected_log)
 
         account.bank_statement
       end
