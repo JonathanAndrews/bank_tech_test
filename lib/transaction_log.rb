@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'date'
 
+# The TransactionLog class stores the user's transactions.
 class TransactionLog
-
   attr_reader :log
-  
+
   def initialize
     @log = []
   end
@@ -13,7 +15,7 @@ class TransactionLog
   end
 end
 
-private 
+private
 
 def todays_date
   Date.today.strftime('%d/%m/%Y')

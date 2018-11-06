@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'date'
 require 'statement'
 require 'transaction_log'
 
+# The Account class tracks the user's balance.
 class Account
-
   attr_reader :transaction_log, :statement, :balance
 
   def initialize(statement: Statement.new, log: TransactionLog.new)
@@ -32,13 +34,13 @@ class Account
   private
 
   def misuse_protections(input)
-    raise "Non-numerical Input" unless float_or_integer?(input)
-    raise "Input must be a Positive Number" if input.negative?
-    raise "Invalid Numerical Input" if pounds_and_pennies?(input)
+    raise 'Non-numerical Input' unless float_or_integer?(input)
+    raise 'Input must be a Positive Number' if input.negative?
+    raise 'Invalid Numerical Input' if pounds_and_pennies?(input)
   end
 
   def overdraw_protection(money)
-    raise "Insufficient Funds" if money > balance
+    raise 'Insufficient Funds' if money > balance
   end
 
   def pounds_and_pennies?(input)
@@ -48,5 +50,4 @@ class Account
   def float_or_integer?(input)
     input.instance_of?(Float) || input.instance_of?(Integer)
   end
-  
 end
