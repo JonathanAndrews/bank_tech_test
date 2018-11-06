@@ -56,15 +56,33 @@ context "Feature Tests" do
     context 'Guarding against Misuse' do
       let(:account) { described_class.new }
 
-      describe 'If someone deposit a String' do
-        it 'should throw an error' do
-          expect{ account.deposit("A String") }.to raise_error("A String is an invalid input")
+      describe 'If someone tries to deposit a String' do
+        it 'should throw an error "Non-numerical Input"' do
+          expect{ account.deposit("A String") }.to raise_error("Non-numerical Input")
         end
       end
 
-      describe 'If someone tries to withdraw a String' do
-        it 'should throw an error' do
-          expect{ account.withdraw("A String") }.to raise_error("A String is an invalid input")
+      describe 'If someone tries to withdraw a Array' do
+        it 'should throw an error "Non-numerical Input"' do
+          expect{ account.withdraw([]) }.to raise_error("Non-numerical Input")
+        end
+      end
+
+      describe 'If someone tries to withdraw a instance of Object' do
+        it 'should throw an error "Non-numerical Input"' do
+          expect{ account.withdraw(Object.new) }.to raise_error("Non-numerical Input")
+        end
+      end
+
+      describe 'If someone tries to deposit an Invalid Numerical Input' do
+        it 'should throw an error "Invalid Numerical Input"' do
+          expect{ account.deposit(1.0001) }.to raise_error("Invalid Numerical Input")
+        end
+      end
+
+      describe 'If someone tries to withdraw anInvalid Numerical Input' do
+        it 'should throw an error "Invalid Numerical Input"' do
+          expect{ account.withdraw(1.0001) }.to raise_error("Invalid Numerical Input")
         end
       end
     end

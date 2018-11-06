@@ -17,22 +17,30 @@ class Account
   end
 
   def deposit(money)
-    misuse_protection(money)
+    misuse_protections(money)
     @balance += money
     transaction_log.add(credit: money)
   end
 
   def withdraw(money)
-    misuse_protection(money)
+    misuse_protections(money)
     @balance -= money
     transaction_log.add(debit: money)
   end
 
   private
 
-  def misuse_protection(input)
-    raise "A String is an invalid input" if input.instance_of?(String)
+  def misuse_protections(input)
+    raise "Non-numerical Input" unless float_or_integer?(input)
+    raise "Invalid Numerical Input" if pounds_and_pennies?(input)
   end
 
+  def pounds_and_pennies?(input)
+    (input * 100) % 1 != 0
+  end
+
+  def float_or_integer?(input)
+    input.instance_of?(Float) || input.instance_of?(Integer)
+  end
   
 end
