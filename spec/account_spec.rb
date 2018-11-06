@@ -7,7 +7,9 @@ describe Account do
     let(:empty_array) { [] }
     let(:statement_double) { double :Statement }
     let(:log_double) { double :TransactionLog, log: empty_array }
-    let(:account) { described_class.new(statement: statement_double, log: log_double) }
+    let(:account) do
+      described_class.new(statement: statement_double, log: log_double)
+    end
 
     describe 'Account#bank_statement' do
       it 'calls Statement#print_out' do
@@ -55,25 +57,6 @@ describe Account do
       end
     end
 
-    describe 'Account#bank_statement' do
-      it 'prints out bank statement with one row after deposit' do
-        allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
-        string_of_table = "date || credit || debit || balance\n"\
-                          '05/11/2018 || 1 ||  || 1'
-        account.deposit(1)
-        expect(account.bank_statement).to eq(string_of_table)
-      end
-
-      it 'prints out bank statement with after withdraw' do
-        allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
-        string_of_table = "date || credit || debit || balance\n"\
-                          "05/11/2018 ||  || 1 || 1\n"\
-                          '05/11/2018 || 2 ||  || 2'
-        account.deposit(2)
-        account.withdraw(1)
-        expect(account.bank_statement).to eq(string_of_table)
-      end
-    end
   end
 
   context 'Guarding against Misuse' do
