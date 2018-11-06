@@ -16,6 +16,11 @@ So I can spend my money,
 I want to be able to make a withdrawal.
 
 ```
+## My Approach
+
+I BDD'ed this project.
+
+`User Story --> Feature Test --> Unit Test --> Red --> Green --> Refactor --> Repeat`
 
 ## Tech
 
@@ -32,15 +37,14 @@ Built with
 ```
 git clone https://github.com/JonathanAndrews/bank_tech_test.git
 ```
-2. `cd` into the project and run the tests.
-```
-rspec
-```
-3. The tests should look like this.
+2. `cd` into the project
+2. `bundle install` to install all the dependencies.
+2. `rspec` to run the tests.
+2. The tests should look like this.
 
 ![tests](rspec_output.png)
 
-4. To interact with the software, require `account.rb` in IRB.
+6. To interact with the software, require `account.rb` in IRB.
 ```
 irb -r './lib/account.rb'
 ```
