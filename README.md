@@ -1,4 +1,4 @@
-### Bank Tech Test
+# Bank Tech Test
 
 This is my attempt at the Bank Tech Test. User Stories implemented can be seen below.
 
@@ -32,22 +32,68 @@ Code Coverage : SimpleCov
 ```
 git clone https://github.com/JonathanAndrews/bank_tech_test.git
 ```
-1. `cd` into the project and run the tests.
+2. `cd` into the project and run the tests.
 ```
 rspec
 ```
-###Insert screen shot of Tests
-1. To interact with the software, require `account.rb` in IRB.
+3. The tests should look like this.
+
+![tests](rspec_output.png)
+
+4. To interact with the software, require `account.rb` in IRB.
 ```
-irb -r 'lib/account.rb'
+irb -r './lib/account.rb'
 ```
 
 ## IRB Demo
+```
+➜  bank_tech_test git:(master) ✗ irb -r './lib/account.rb'
 
+2.5.1 :001 > acc = Account.new
 
-## Sequence Diagram
+=> #<Account:0x00007fe2580c35e0 @balance=0, @transaction_log=#<TransactionLog:0x00007fe2580c3518 @log=[]>, @statement=#<Statement:0x00007fe2580c3590>>
 
-## License
-A short snippet describing the license (MIT, Apache etc)
+2.5.1 :002 > acc.deposit(1000)
 
-MIT © Yourname
+ => [{:date=>"06/11/2018", :credit=>1000, :debit=>nil}]
+
+2.5.1 :003 > acc.deposit(2000)
+
+ => [{:date=>"06/11/2018", :credit=>1000, :debit=>nil}, {:date=>"06/11/2018", :credit=>2000, :debit=>nil}]
+
+2.5.1 :004 > acc.withdraw(500)
+
+ => [{:date=>"06/11/2018", :credit=>1000, :debit=>nil}, {:date=>"06/11/2018", :credit=>2000, :debit=>nil}, {:date=>"06/11/2018", :credit=>nil, :debit=>500}]
+
+2.5.1 :005 > acc.bank_statement
+date || credit || debit || balance
+06/11/2018 || || 500.00 || 2500.00
+06/11/2018 || 2000.00 || || 3000.00
+06/11/2018 || 1000.00 || || 1000.00
+ => nil
+
+2.5.1 :006 > acc.deposit("String")
+
+RuntimeError (Non-numerical Input)
+
+2.5.1 :007 > acc.deposit(-50)
+
+RuntimeError (Input must be a Positive Number)
+
+2.5.1 :008 > acc.deposit(5.5500005)
+
+RuntimeError (Invalid Numerical Input)
+
+2.5.1 :009 > acc.withdraw(5000)
+
+RuntimeError (Insufficient Funds)
+
+```
+
+## Sequence and Class Diagram
+
+![Diagrams](BankTechTest.jpg)
+
+## Contributing
+
+Make a pull request if you want to contribute. :)
