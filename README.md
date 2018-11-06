@@ -37,7 +37,7 @@ Built with
 ```
 git clone https://github.com/JonathanAndrews/bank_tech_test.git
 ```
-2. `cd` into the project
+2. `cd` into the project.
 2. `bundle install` to install all the dependencies.
 2. `rspec` to run the tests.
 2. The tests should look like this.
