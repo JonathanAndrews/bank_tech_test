@@ -33,6 +33,7 @@ class Account
 
   def misuse_protections(input)
     raise "Non-numerical Input" unless float_or_integer?(input)
+    raise "Input must be a Positive Number" if input.negative?
     raise "Invalid Numerical Input" if pounds_and_pennies?(input)
   end
 

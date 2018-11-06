@@ -82,9 +82,21 @@ context "Feature Tests" do
         end
       end
 
-      describe 'If someone tries to withdraw anInvalid Numerical Input' do
+      describe 'If someone tries to withdraw an Invalid Numerical Input' do
         it 'should throw an error "Invalid Numerical Input"' do
           expect{ account.withdraw(1.0001) }.to raise_error("Invalid Numerical Input")
+        end
+      end
+
+      describe 'If someone tries to deposit a Negative Number' do
+        it 'should throw an error "Input must be a Positive Number"' do
+          expect{ account.deposit(-1) }.to raise_error("Input must be a Positive Number")
+        end
+      end
+
+      describe 'If someone tries to withdraw a Negative Number' do
+        it 'should throw an error "Input must be a Positive Number"' do
+          expect{ account.withdraw(-1) }.to raise_error("Input must be a Positive Number")
         end
       end
     end
