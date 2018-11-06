@@ -21,10 +21,10 @@ I want to be able to make a withdrawal.
 
 Built with
 
-Language      : Ruby
-Testing       : RSpec (Unit and Feature)
-Linter        : RuboCop
-Code Coverage : SimpleCov 
+* Language      : Ruby
+* Testing       : RSpec (Unit and Feature)
+* Linter        : RuboCop
+* Code Coverage : SimpleCov 
 
 ## Usage
 
@@ -66,10 +66,12 @@ irb -r './lib/account.rb'
  => [{:date=>"06/11/2018", :credit=>1000, :debit=>nil}, {:date=>"06/11/2018", :credit=>2000, :debit=>nil}, {:date=>"06/11/2018", :credit=>nil, :debit=>500}]
 
 2.5.1 :005 > acc.bank_statement
+
 date || credit || debit || balance
 06/11/2018 || || 500.00 || 2500.00
 06/11/2018 || 2000.00 || || 3000.00
 06/11/2018 || 1000.00 || || 1000.00
+
  => nil
 
 2.5.1 :006 > acc.deposit("String")
