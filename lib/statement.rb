@@ -17,7 +17,7 @@ class Statement
         " #{money_syntax(debit)}|| #{money_syntax(balance)}#{table_rows}"
     end
 
-    COLUMN_TITLES + table_rows
+    puts COLUMN_TITLES + table_rows
   end
 
   def money_syntax(number)

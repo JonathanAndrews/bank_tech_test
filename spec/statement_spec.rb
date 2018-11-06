@@ -8,9 +8,10 @@ describe Statement do
     let(:statement) { described_class.new }
     describe 'Statement#print_out' do
       it 'prints out blank bank statement' do
-        printed_statement = statement.print_out(no_transactions)
-
-        expect(printed_statement).to eq('date || credit || debit || balance')
+        string_of_table = "date || credit || debit || balance\n"
+        expect do
+          statement.print_out(no_transactions)
+        end.to output(string_of_table).to_stdout
       end
     end
   end
@@ -25,19 +26,21 @@ describe Statement do
       it 'prints out bank statement with one row after a deposit' do
         transactions << credit_transaction
         string_of_table = "date || credit || debit || balance\n"\
-                          '05/11/2018 || 1.00 || || 1.00 '
-
-        printed_statement = statement.print_out(transactions)
-        expect(printed_statement).to eq(string_of_table)
+                          "05/11/2018 || 1.00 || || 1.00 \n"
+                          
+        expect do
+          statement.print_out(transactions)
+        end.to output(string_of_table).to_stdout
       end
 
       it 'prints out bank statement with one row after withdraw' do
         transactions << debit_transaction
         string_of_table = "date || credit || debit || balance\n"\
-                          '05/11/2018 || || 1.00 || -1.00 '
+                          "05/11/2018 || || 1.00 || -1.00 \n"
 
-        printed_statement = statement.print_out(transactions)
-        expect(printed_statement).to eq(string_of_table)
+        expect do
+          statement.print_out(transactions)
+        end.to output(string_of_table).to_stdout
       end
 
       it 'prints out bank statement in reverse chronological order' do
@@ -51,10 +54,11 @@ describe Statement do
                           "05/11/2018 || 1.00 || || 2.00 \n"\
                           "05/11/2018 || 1.00 || || 1.00 \n"\
                           "05/11/2018 || 1.00 || || 0.00 \n"\
-                          '05/11/2018 || || 1.00 || -1.00 '
+                          "05/11/2018 || || 1.00 || -1.00 \n"
 
-        printed_statement = statement.print_out(transactions)
-        expect(printed_statement).to eq(string_of_table)
+        expect do
+          statement.print_out(transactions)
+        end.to output(string_of_table).to_stdout
       end
     end
   end

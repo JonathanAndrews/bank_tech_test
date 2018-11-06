@@ -8,8 +8,8 @@ context 'Feature Tests' do
       let(:account) { described_class.new }
       describe 'Account#bank_statement' do
         it 'prints out blank bank statement' do
-          statement = account.bank_statement
-          expect(statement).to eq('date || credit || debit || balance')
+          blank_statement = "date || credit || debit || balance\n"
+          expect { account.bank_statement }.to output(blank_statement).to_stdout
         end
       end
     end
@@ -55,19 +55,19 @@ context 'Feature Tests' do
         it 'prints out bank statement with one row after deposit' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
           string_of_table = "date || credit || debit || balance\n"\
-                            '05/11/2018 || 1.00 || || 1.00 '
+                            "05/11/2018 || 1.00 || || 1.00 \n"
           account.deposit(1)
-          expect(account.bank_statement).to eq(string_of_table)
+          expect { account.bank_statement }.to output(string_of_table).to_stdout
         end
 
         it 'prints out bank statement with after withdraw' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
           string_of_table = "date || credit || debit || balance\n"\
                             "05/11/2018 || || 1.00 || 1.00 \n"\
-                            '05/11/2018 || 2.00 || || 2.00 '
+                            "05/11/2018 || 2.00 || || 2.00 \n"
           account.deposit(2)
           account.withdraw(1)
-          expect(account.bank_statement).to eq(string_of_table)
+          expect { account.bank_statement }.to output(string_of_table).to_stdout
         end
       end
     end

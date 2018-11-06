@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'statement'
-require 'transaction_log'
+require_relative 'statement'
+require_relative 'transaction_log'
 
 # The Account class tracks the user's balance.
 class Account
