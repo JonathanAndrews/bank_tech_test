@@ -26,18 +26,15 @@ describe Account do
         returned_hash = { date: '05/11/2018', credit: 1, debit: nil }
         expect(account.deposit(1)).to eq([returned_hash])
       end
-    end 
 
-    describe 'Account#bank_statement' do
-      it 'prints out bank statement with one row after deposit' do
+      it 'increases the balance by specified amount' do
         allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
-        string_of_table = "date || credit || debit || balance\n"\
-                          "05/11/2018 || 1 ||  || 1"
-        account.deposit(1)
-        expect(account.bank_statement).to eq(string_of_table)
+
+        account.deposit(10)
+        expect(account.balance).to eq(10)
       end
     end
-
+    
     describe 'Account#withdraw' do
       it 'makes a debit transaction object' do
         allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
@@ -47,7 +44,25 @@ describe Account do
         account.deposit(1)
         expect(account.withdraw(1)).to eq([deposit_hash, withdraw_hash])
       end
-    
+
+      it 'decreases the balance by specified amount' do
+        allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
+        
+        account.deposit(10)
+        account.withdraw(4)
+        expect(account.balance).to eq(6)
+      end
+    end
+
+    describe 'Account#bank_statement' do
+      it 'prints out bank statement with one row after deposit' do
+        allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
+        string_of_table = "date || credit || debit || balance\n"\
+                          "05/11/2018 || 1 ||  || 1"
+        account.deposit(1)
+        expect(account.bank_statement).to eq(string_of_table)
+      end
+
       it 'prints out bank statement with after withdraw' do
         allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
         string_of_table = "date || credit || debit || balance\n"\
