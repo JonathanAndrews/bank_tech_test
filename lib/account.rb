@@ -24,6 +24,7 @@ class Account
 
   def withdraw(money)
     misuse_protections(money)
+    overdraw_protection(money)
     @balance -= money
     transaction_log.add(debit: money)
   end
@@ -33,6 +34,10 @@ class Account
   def misuse_protections(input)
     raise "Non-numerical Input" unless float_or_integer?(input)
     raise "Invalid Numerical Input" if pounds_and_pennies?(input)
+  end
+
+  def overdraw_protection(money)
+    raise "Insufficient Funds" if money > balance
   end
 
   def pounds_and_pennies?(input)

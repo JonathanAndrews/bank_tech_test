@@ -9,7 +9,7 @@ class TransactionLog
   end
 
   def add(credit: nil, debit: nil)
-    @log.unshift({ date: todays_date, credit: credit, debit: debit })
+    @log << { date: todays_date, credit: credit, debit: debit }
   end
 end
 

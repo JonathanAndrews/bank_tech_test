@@ -36,17 +36,19 @@ context "Feature Tests" do
       describe 'Account#withdraw' do
         it 'makes a debit transaction object' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
-  
-          returned_hash = { date: '05/11/2018', debit: 1, credit: nil }
-          expect(account.withdraw(1)).to eq([returned_hash])
+          
+          deposit_hash = { date: '05/11/2018', debit: nil, credit: 1 }
+          withdraw_hash = { date: '05/11/2018', debit: 1, credit: nil }
+          account.deposit(1)
+          expect(account.withdraw(1)).to eq([deposit_hash, withdraw_hash])
         end
-      end 
-  
-      describe 'Account#withdraw' do
-        it 'prints out bank statement with one row after withdraw' do
+      
+        it 'prints out bank statement with after withdraw' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
           string_of_table = "date || credit || debit || balance\n"\
-                            "05/11/2018 ||  || 1 || -1"
+                            "05/11/2018 ||  || 1 || 1\n"\
+                            "05/11/2018 || 2 ||  || 2"
+          account.deposit(2)
           account.withdraw(1)
           expect(account.bank_statement).to eq(string_of_table)
         end
@@ -83,6 +85,16 @@ context "Feature Tests" do
       describe 'If someone tries to withdraw anInvalid Numerical Input' do
         it 'should throw an error "Invalid Numerical Input"' do
           expect{ account.withdraw(1.0001) }.to raise_error("Invalid Numerical Input")
+        end
+      end
+    end
+
+    context 'Account cannot have negative bank balance' do
+      let(:account) { described_class.new }
+
+      describe 'If someone tries to withdraw more money than they have' do
+        it 'should throw an error "Insufficient Funds"' do
+          expect{ account.withdraw(1) }.to raise_error("Insufficient Funds")
         end
       end
     end

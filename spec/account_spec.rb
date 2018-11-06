@@ -33,9 +33,11 @@ describe Account do
     describe 'Account#withdraw' do
       it 'makes a debit transaction object' do
         allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
-
-        returned_hash = { date: '05/11/2018', debit: 1, credit: nil }
-        expect(account.withdraw(1)).to eq([returned_hash])
+        
+        deposit_hash = { date: '05/11/2018', debit: nil, credit: 1 }
+        withdraw_hash = { date: '05/11/2018', debit: 1, credit: nil }
+        account.deposit(1)
+        expect(account.withdraw(1)).to eq([deposit_hash, withdraw_hash])
       end
     end 
   end
