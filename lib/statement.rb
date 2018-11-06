@@ -13,14 +13,14 @@ class Statement
       credit = transaction[:credit]
       debit = transaction[:debit]
       balance = balance + credit.to_f - debit.to_f
-      table_rows = "\n#{transaction[:date]} || #{money_syntax(credit)} ||"\
-        " #{money_syntax(debit)} || #{money_syntax(balance)}#{table_rows}"
+      table_rows = "\n#{transaction[:date]} || #{money_syntax(credit)}||"\
+        " #{money_syntax(debit)}|| #{money_syntax(balance)}#{table_rows}"
     end
 
     COLUMN_TITLES + table_rows
   end
 
   def money_syntax(number)
-    format('%.2f', number) unless number.nil?
+    format('%.2f', number) + ' ' unless number.nil?
   end
 end

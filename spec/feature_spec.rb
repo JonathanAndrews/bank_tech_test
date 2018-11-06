@@ -27,8 +27,8 @@ context 'Feature Tests' do
         it 'increases the balance by specified amount' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
 
-          account.deposit(10)
-          expect(account.balance).to eq(10)
+          account.deposit(9.5)
+          expect(account.balance).to eq(9.5)
         end
       end
 
@@ -55,7 +55,7 @@ context 'Feature Tests' do
         it 'prints out bank statement with one row after deposit' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
           string_of_table = "date || credit || debit || balance\n"\
-                            '05/11/2018 || 1.00 ||  || 1.00'
+                            '05/11/2018 || 1.00 || || 1.00 '
           account.deposit(1)
           expect(account.bank_statement).to eq(string_of_table)
         end
@@ -63,8 +63,8 @@ context 'Feature Tests' do
         it 'prints out bank statement with after withdraw' do
           allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
           string_of_table = "date || credit || debit || balance\n"\
-                            "05/11/2018 ||  || 1.00 || 1.00\n"\
-                            '05/11/2018 || 2.00 ||  || 2.00'
+                            "05/11/2018 || || 1.00 || 1.00 \n"\
+                            '05/11/2018 || 2.00 || || 2.00 '
           account.deposit(2)
           account.withdraw(1)
           expect(account.bank_statement).to eq(string_of_table)

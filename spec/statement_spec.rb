@@ -25,7 +25,7 @@ describe Statement do
       it 'prints out bank statement with one row after a deposit' do
         transactions << credit_transaction
         string_of_table = "date || credit || debit || balance\n"\
-                          '05/11/2018 || 1.00 ||  || 1.00'
+                          '05/11/2018 || 1.00 || || 1.00 '
 
         printed_statement = statement.print_out(transactions)
         expect(printed_statement).to eq(string_of_table)
@@ -34,7 +34,7 @@ describe Statement do
       it 'prints out bank statement with one row after withdraw' do
         transactions << debit_transaction
         string_of_table = "date || credit || debit || balance\n"\
-                          '05/11/2018 ||  || 1.00 || -1.00'
+                          '05/11/2018 || || 1.00 || -1.00 '
 
         printed_statement = statement.print_out(transactions)
         expect(printed_statement).to eq(string_of_table)
@@ -47,11 +47,11 @@ describe Statement do
         transactions << credit_transaction
         transactions << credit_transaction
         string_of_table = "date || credit || debit || balance\n"\
-                          "05/11/2018 || 1.00 ||  || 3.00\n"\
-                          "05/11/2018 || 1.00 ||  || 2.00\n"\
-                          "05/11/2018 || 1.00 ||  || 1.00\n"\
-                          "05/11/2018 || 1.00 ||  || 0.00\n"\
-                          '05/11/2018 ||  || 1.00 || -1.00'
+                          "05/11/2018 || 1.00 || || 3.00 \n"\
+                          "05/11/2018 || 1.00 || || 2.00 \n"\
+                          "05/11/2018 || 1.00 || || 1.00 \n"\
+                          "05/11/2018 || 1.00 || || 0.00 \n"\
+                          '05/11/2018 || || 1.00 || -1.00 '
 
         printed_statement = statement.print_out(transactions)
         expect(printed_statement).to eq(string_of_table)
