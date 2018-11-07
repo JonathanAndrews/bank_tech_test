@@ -14,8 +14,8 @@ class Statement
       credit = transaction[:credit]
       debit = transaction[:debit]
       balance = balance + credit.to_f - debit.to_f
-      table_rows = "\n#{date_string} || #{money_syntax(credit)}||"\
-        " #{money_syntax(debit)}|| #{money_syntax(balance)}#{table_rows}"
+      table_rows = "\n#{date_string} || #{format_money(credit)}||"\
+        " #{format_money(debit)}|| #{format_money(balance)}#{table_rows}"
     end
 
     puts COLUMN_TITLES + table_rows
@@ -27,7 +27,7 @@ class Statement
     date_object.strftime('%d/%m/%Y')
   end
 
-  def money_syntax(number)
+  def format_money(number)
     format('%.2f', number) + ' ' unless number.nil?
   end
 end
