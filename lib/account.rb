@@ -6,7 +6,7 @@ require_relative 'transaction_log'
 
 # The Account class tracks the user's balance.
 class Account
-  attr_reader :transaction_log, :statement, :balance
+  attr_reader :transaction_log, :balance
 
   def initialize(statement: Statement.new, log: TransactionLog.new)
     @balance = 0
@@ -15,7 +15,7 @@ class Account
   end
 
   def bank_statement
-    statement.print_out(transaction_log.log)
+    @statement.print_out(transaction_log.log)
   end
 
   def deposit(money)
