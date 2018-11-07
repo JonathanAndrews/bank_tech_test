@@ -2,33 +2,32 @@
 
 require 'date'
 require_relative 'statement'
-require_relative 'transaction_log'
 
 # The Account class tracks the user's balance.
 class Account
-  attr_reader :transaction_log, :balance
+  attr_reader :balance
 
-  def initialize(statement: Statement.new, log: TransactionLog.new)
+  def initialize(statement: Statement.new)
     @balance = 0
-    @transaction_log = log
+    @transaction_log = []
     @statement = statement
   end
 
   def bank_statement
-    @statement.print_out(transaction_log.log)
+    @statement.print_out(@transaction_log)
   end
 
   def deposit(money)
     validate_input(money)
     @balance += money
-    transaction_log.add(credit: money)
+    @transaction_log << { date: Date.today, credit: money }
   end
 
   def withdraw(money)
     validate_input(money)
     stop_overdraw(money)
     @balance -= money
-    transaction_log.add(debit: money)
+    @transaction_log << { date: Date.today, debit: money }
   end
 
   private

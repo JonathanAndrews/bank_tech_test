@@ -4,18 +4,17 @@ require 'account'
 
 describe Account do
   context 'Brand new bank account' do
-    let(:deposit_hash) { { date: '05/11/2018', debit: nil, credit: 2 } }
-    let(:withdraw_hash) { { date: '05/11/2018', debit: 1, credit: nil } }
+    let(:the_date) { Date.new(2018, 11, 5) }
+    let(:deposit_hash) { { date: the_date, credit: 2 } }
+    let(:withdraw_hash) { { date: the_date, debit: 1 } }
     let(:statement_double) { double :Statement }
-    let(:log_double) { double :TransactionLog, log: [deposit_hash, withdraw_hash] }
     let(:account) do
-      described_class.new(statement: statement_double, log: log_double)
+      described_class.new(statement: statement_double)
     end
 
     describe 'Account#bank_statement' do
       it 'calls Statement#print_out with full transaction logs' do
         allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
-        allow(log_double).to receive(:add)
         expected_log = [deposit_hash, withdraw_hash]
 
         account.deposit(2)
@@ -29,13 +28,16 @@ describe Account do
   end
 
   context 'Transactions' do
-    let(:account) { described_class.new }
+    let(:statement_double) { double :Statement }
+    let(:account) do
+      described_class.new(statement: statement_double)
+    end
     describe 'Account#deposit' do
       it 'makes a credit transaction object' do
         the_date = Date.new(2018, 11, 5)
         allow(Date).to receive(:today).and_return(the_date)
 
-        returned_hash = { date: the_date, credit: 1, debit: nil }
+        returned_hash = { date: the_date, credit: 1 }
         expect(account.deposit(1)).to eq([returned_hash])
       end
 
@@ -52,8 +54,8 @@ describe Account do
         the_date = Date.new(2018, 11, 5)
         allow(Date).to receive(:today).and_return(the_date)
 
-        deposit_hash = { date: the_date, debit: nil, credit: 1 }
-        withdraw_hash = { date: the_date, debit: 1, credit: nil }
+        deposit_hash = { date: the_date, credit: 1 }
+        withdraw_hash = { date: the_date, debit: 1 }
         account.deposit(1)
         expect(account.withdraw(1)).to eq([deposit_hash, withdraw_hash])
       end
@@ -69,7 +71,10 @@ describe Account do
   end
 
   context 'Guarding against Misuse' do
-    let(:account) { described_class.new }
+    let(:statement_double) { double :Statement }
+    let(:account) do
+      described_class.new(statement: statement_double)
+    end
 
     describe 'If someone tries to deposit a String' do
       it 'should throw an error "Non-numerical Input"' do
