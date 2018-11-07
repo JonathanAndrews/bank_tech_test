@@ -98,7 +98,7 @@ RuntimeError (Insufficient Funds)
 
 ## Sequence and Class Diagram
 
-![Diagrams](BankTechTest.jpg)
+![Diagrams](BankTechTest.png)
 
 ## Contributing
 
