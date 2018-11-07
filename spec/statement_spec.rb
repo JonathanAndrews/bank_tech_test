@@ -17,8 +17,8 @@ describe Statement do
   end
 
   context 'Statement after transactions' do
-    let(:credit_transaction) { { date: '05/11/2018', credit: 1, balance: 1 } }
-    let(:debit_transaction) { { date: '05/11/2018', debit: 1, balance: -1 } }
+    let(:credit_transaction) { { date: Date.new(2018, 11, 5), credit: 1, balance: 1 } }
+    let(:debit_transaction) { { date: Date.new(2018, 11, 5), debit: 1, balance: -1 } }
     let(:transactions) { [] }
     let(:statement) { described_class.new }
 

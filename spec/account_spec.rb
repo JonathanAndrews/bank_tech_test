@@ -32,9 +32,10 @@ describe Account do
     let(:account) { described_class.new }
     describe 'Account#deposit' do
       it 'makes a credit transaction object' do
-        allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
+        the_date = Date.new(2018, 11, 5)
+        allow(Date).to receive(:today).and_return(the_date)
 
-        returned_hash = { date: '05/11/2018', credit: 1, debit: nil }
+        returned_hash = { date: the_date, credit: 1, debit: nil }
         expect(account.deposit(1)).to eq([returned_hash])
       end
 
@@ -48,10 +49,11 @@ describe Account do
 
     describe 'Account#withdraw' do
       it 'makes a debit transaction object' do
-        allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
+        the_date = Date.new(2018, 11, 5)
+        allow(Date).to receive(:today).and_return(the_date)
 
-        deposit_hash = { date: '05/11/2018', debit: nil, credit: 1 }
-        withdraw_hash = { date: '05/11/2018', debit: 1, credit: nil }
+        deposit_hash = { date: the_date, debit: nil, credit: 1 }
+        withdraw_hash = { date: the_date, debit: 1, credit: nil }
         account.deposit(1)
         expect(account.withdraw(1)).to eq([deposit_hash, withdraw_hash])
       end

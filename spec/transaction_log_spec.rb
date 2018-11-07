@@ -13,17 +13,19 @@ describe TransactionLog do
 
   describe '#add' do
     it 'inserts a credit transaction hash into the index 0 postion' do
-      allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
+      the_date = Date.new(2018, 11, 5)
+      allow(Date).to receive(:today).and_return(the_date)
 
-      returned_hash = { date: '05/11/2018', credit: 1, debit: nil }
+      returned_hash = { date: the_date, credit: 1, debit: nil }
       transaction_log.add(credit: 1)
       expect(transaction_log.log).to eq([returned_hash])
     end
 
     it 'inserts a debit transaction hash into the index 0 postion' do
-      allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
+      the_date = Date.new(2018, 11, 5)
+      allow(Date).to receive(:today).and_return(the_date)
 
-      returned_hash = { date: '05/11/2018', credit: nil, debit: 1 }
+      returned_hash = { date: the_date, credit: nil, debit: 1 }
       transaction_log.add(debit: 1)
       expect(transaction_log.log).to eq([returned_hash])
     end

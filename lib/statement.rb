@@ -10,14 +10,21 @@ class Statement
     balance = 0
 
     transactions.each do |transaction|
+      date_string = format_date(transaction[:date])
       credit = transaction[:credit]
       debit = transaction[:debit]
       balance = balance + credit.to_f - debit.to_f
-      table_rows = "\n#{transaction[:date]} || #{money_syntax(credit)}||"\
+      table_rows = "\n#{date_string} || #{money_syntax(credit)}||"\
         " #{money_syntax(debit)}|| #{money_syntax(balance)}#{table_rows}"
     end
 
     puts COLUMN_TITLES + table_rows
+  end
+
+  private
+  
+  def format_date(date_object)
+    date_object.strftime('%d/%m/%Y')
   end
 
   def money_syntax(number)
