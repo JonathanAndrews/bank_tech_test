@@ -2,6 +2,27 @@
 
 require 'account'
 
+context 'Acceptance Test' do
+  describe Account do
+    let(:account) { described_class.new }
+    describe 'Account#bank_statement' do
+      it 'prints out bank statement with after withdraw' do
+        allow(Date).to receive(:today).and_return(Date.new(2018, 11, 5))
+        string_of_table = "date || credit || debit || balance\n"\
+                          "05/11/2018 || || 500.00 || 2500.00 \n"\
+                          "05/11/2018 || 2000.00 || || 3000.00 \n"\
+                          "05/11/2018 || 1000.00 || || 1000.00 \n"
+
+        account.deposit(1000)
+        account.deposit(2000)
+        account.withdraw(500)
+        expect { account.bank_statement }.to output(string_of_table).to_stdout
+      end
+    end
+  end
+end
+
+
 context 'Feature Tests' do
   describe Account do
     context 'Brand new bank account' do
@@ -70,70 +91,6 @@ context 'Feature Tests' do
           account.deposit(2)
           account.withdraw(1)
           expect { account.bank_statement }.to output(string_of_table).to_stdout
-        end
-      end
-    end
-
-    context 'Guarding against Misuse' do
-      let(:account) { described_class.new }
-
-      describe 'If someone tries to deposit a String' do
-        it 'should throw an error "Non-numerical Input"' do
-          expect { account.deposit('A String') }.to raise_error\
-            'Non-numerical Input'
-        end
-      end
-
-      describe 'If someone tries to withdraw a Array' do
-        it 'should throw an error "Non-numerical Input"' do
-          expect { account.withdraw([]) }.to raise_error\
-            'Non-numerical Input'
-        end
-      end
-
-      describe 'If someone tries to withdraw a instance of Object' do
-        it 'should throw an error "Non-numerical Input"' do
-          expect { account.withdraw(Object.new) }.to raise_error\
-            'Non-numerical Input'
-        end
-      end
-
-      describe 'If someone tries to deposit an Invalid Numerical Input' do
-        it 'should throw an error "Invalid Numerical Input"' do
-          expect { account.deposit(1.0001) }.to raise_error\
-            'Invalid Numerical Input'
-        end
-      end
-
-      describe 'If someone tries to withdraw an Invalid Numerical Input' do
-        it 'should throw an error "Invalid Numerical Input"' do
-          expect { account.withdraw(1.0001) }.to raise_error\
-            'Invalid Numerical Input'
-        end
-      end
-
-      describe 'If someone tries to deposit a Negative Number' do
-        it 'should throw an error "Input must be a Positive Number"' do
-          expect { account.deposit(-1) }.to raise_error\
-            'Input must be a Positive Number'
-        end
-      end
-
-      describe 'If someone tries to withdraw a Negative Number' do
-        it 'should throw an error "Input must be a Positive Number"' do
-          expect { account.withdraw(-1) }.to raise_error\
-            'Input must be a Positive Number'
-        end
-      end
-    end
-
-    context 'Account cannot have negative bank balance' do
-      let(:account) { described_class.new }
-
-      describe 'If someone tries to withdraw more money than they have' do
-        it 'should throw an error "Insufficient Funds"' do
-          expect { account.withdraw(1) }.to raise_error\
-            'Insufficient Funds'
         end
       end
     end
