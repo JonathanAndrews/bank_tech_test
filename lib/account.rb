@@ -19,27 +19,27 @@ class Account
   end
 
   def deposit(money)
-    misuse_protections(money)
+    validate_input(money)
     @balance += money
     transaction_log.add(credit: money)
   end
 
   def withdraw(money)
-    misuse_protections(money)
-    overdraw_protection(money)
+    validate_input(money)
+    stop_overdraw(money)
     @balance -= money
     transaction_log.add(debit: money)
   end
 
   private
 
-  def misuse_protections(input)
+  def validate_input(input)
     raise 'Non-numerical Input' unless float_or_integer?(input)
     raise 'Input must be a Positive Number' if input.negative?
     raise 'Invalid Numerical Input' if pounds_and_pennies?(input)
   end
 
-  def overdraw_protection(money)
+  def stop_overdraw(money)
     raise 'Insufficient Funds' if money > balance
   end
 
